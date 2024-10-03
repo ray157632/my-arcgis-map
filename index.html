@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="計畫區三維建物圖"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>計畫區三維建物圖</title>
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.22/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.22/"></script>
+
+    <script>
+      require(["esri/Map", "esri/views/SceneView", "esri/layers/SceneLayer"], (
+        Map,
+        SceneView,
+        SceneLayer
+      ) => {
+        // Create Map
+        const map = new Map({
+          basemap: "dark-gray-vector",
+          ground: "world-elevation",
+        });
+
+        // Create the SceneView
+        const view = new SceneView({
+          container: "viewDiv",
+          map: map,
+          camera: {
+            position: [121.5525424, 25.0250296, 707],
+            tilt: 81,
+            heading: 50,
+          },
+        });
+
+        // Create SceneLayer for Taipei and add to the map
+        const taipeiLayer = new SceneLayer({
+          url: "https://i3s.nlsc.gov.tw/building/i3s/SceneServer/layers/0",
+        });
+        map.add(taipeiLayer);
+
+        // Create SceneLayer for New Taipei and add to the map
+        const newTaipeiLayer = new SceneLayer({
+          url: "https://i3s.nlsc.gov.tw/building/i3s/SceneServer/layers/5",
+        });
+        map.add(newTaipeiLayer);
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>
